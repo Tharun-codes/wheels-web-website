@@ -1,4 +1,4 @@
-import { Zap, ShieldCheck, Clock, HeadphonesIcon, Smartphone, Award, FileText, Wallet } from 'lucide-react'
+import { Zap, ShieldCheck, Clock, HeadphonesIcon, Smartphone, Award, FileText, Wallet, Sparkles, TrendingUp } from 'lucide-react'
 
 const Features = () => {
   const features = [
@@ -6,60 +6,65 @@ const Features = () => {
       icon: Zap,
       title: 'Lightning Fast Approval',
       description: 'Get approved in as little as 2 minutes with our streamlined digital application process.',
-      color: 'bg-yellow-100 text-yellow-600'
+      gradient: 'from-yellow-400 to-orange-500'
     },
     {
       icon: ShieldCheck,
       title: 'Bank-Level Security',
       description: 'Your personal and financial information is protected with 256-bit encryption.',
-      color: 'bg-green-100 text-green-600'
+      gradient: 'from-green-400 to-emerald-500'
     },
     {
       icon: Clock,
       title: 'Flexible Terms',
       description: 'Choose loan terms from 24 to 84 months that fit your budget and lifestyle.',
-      color: 'bg-blue-100 text-blue-600'
+      gradient: 'from-blue-400 to-cyan-500'
     },
     {
       icon: HeadphonesIcon,
-      title: '24/7 Support',
+      title: '24/7 Concierge Support',
       description: 'Our dedicated team is always available to help you with any questions or concerns.',
-      color: 'bg-purple-100 text-purple-600'
+      gradient: 'from-purple-400 to-pink-500'
     },
     {
       icon: Smartphone,
-      title: 'Mobile-Friendly',
+      title: 'Premium Mobile Experience',
       description: 'Apply and manage your loan from anywhere with our responsive mobile experience.',
-      color: 'bg-pink-100 text-pink-600'
+      gradient: 'from-pink-400 to-rose-500'
     },
     {
       icon: Award,
-      title: 'Competitive Rates',
+      title: 'Industry-Leading Rates',
       description: 'Enjoy some of the lowest interest rates in the industry, starting at 3.9% APR.',
-      color: 'bg-orange-100 text-orange-600'
+      gradient: 'from-orange-400 to-amber-500'
     },
     {
       icon: FileText,
-      title: 'No Hidden Fees',
-      description: 'Transparent pricing with no application fees, prepayment penalties, or hidden charges.',
-      color: 'bg-teal-100 text-teal-600'
+      title: 'Transparent Pricing',
+      description: 'No hidden fees, no application charges, no prepayment penalties. Complete transparency.',
+      gradient: 'from-teal-400 to-cyan-500'
     },
     {
       icon: Wallet,
-      title: 'Bad Credit Welcome',
+      title: 'All Credit Welcome',
       description: 'We work with borrowers of all credit backgrounds to find the right loan solution.',
-      color: 'bg-red-100 text-red-600'
+      gradient: 'from-red-400 to-pink-500'
     }
   ]
 
   return (
     <div>
-      <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-          Why Choose <span className="text-gradient">Wheels Web?</span>
+      <div className="text-center mb-16">
+        <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 rounded-full px-4 py-2 mb-6">
+          <Sparkles className="h-4 w-4 text-gold-400" />
+          <span className="text-gold-400 text-sm font-medium">Premium Features</span>
+        </div>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <span className="text-white">Why Choose </span>
+          <span className="text-gradient">Wheels Web?</span>
         </h2>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          We're committed to making your car buying experience seamless, affordable, and stress-free.
+        <p className="text-xl text-navy-300 max-w-2xl mx-auto">
+          Experience the future of new and used car financing with our premium features designed for all your automotive needs.
         </p>
       </div>
 
@@ -69,40 +74,45 @@ const Features = () => {
           return (
             <div
               key={index}
-              className="bg-white rounded-2xl p-6 shadow-lg card-hover"
+              className="group relative card-luxury card-hover overflow-hidden"
             >
-              <div className={`w-14 h-14 ${feature.color} rounded-xl flex items-center justify-center mb-4`}>
-                <Icon className="h-7 w-7" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+              <div className={`relative w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                <Icon className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
+              <h3 className="relative text-xl font-bold text-white mb-3 group-hover:text-gold-400 transition-colors">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="relative text-navy-300 leading-relaxed">
                 {feature.description}
               </p>
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-400 to-luxury-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
             </div>
           )
         })}
       </div>
 
       {/* Stats Section */}
-      <div className="mt-16 bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-8 md:p-12 text-white">
-        <div className="grid md:grid-cols-4 gap-8 text-center">
-          <div>
-            <div className="text-4xl md:text-5xl font-bold mb-2">50K+</div>
-            <div className="text-primary-100">Happy Customers</div>
-          </div>
-          <div>
-            <div className="text-4xl md:text-5xl font-bold mb-2">$2B+</div>
-            <div className="text-primary-100">Loans Funded</div>
-          </div>
-          <div>
-            <div className="text-4xl md:text-5xl font-bold mb-2">4.9★</div>
-            <div className="text-primary-100">Customer Rating</div>
-          </div>
-          <div>
-            <div className="text-4xl md:text-5xl font-bold mb-2">50+</div>
-            <div className="text-primary-100">Lender Partners</div>
+      <div className="mt-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-gold-500/20 to-luxury-500/20 rounded-3xl blur-3xl"></div>
+        <div className="relative bg-glass rounded-3xl p-8 md:p-12 border border-gold-500/30">
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold text-gradient mb-2 group-hover:scale-110 transition-transform">50K+</div>
+              <div className="text-navy-300">Happy Clients</div>
+            </div>
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold text-gradient mb-2 group-hover:scale-110 transition-transform">$2B+</div>
+              <div className="text-navy-300">Loans Funded</div>
+            </div>
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold text-gradient mb-2 group-hover:scale-110 transition-transform">4.9★</div>
+              <div className="text-navy-300">Rating</div>
+            </div>
+            <div className="group">
+              <div className="text-5xl md:text-6xl font-bold text-gradient mb-2 group-hover:scale-110 transition-transform">50+</div>
+              <div className="text-navy-300">Lender Partners</div>
+            </div>
           </div>
         </div>
       </div>

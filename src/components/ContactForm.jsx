@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, CheckCircle, Sparkles, MessageCircle } from 'lucide-react'
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -9,18 +9,40 @@ const ContactForm = () => {
     message: ''
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    // In a real application, you would send this data to a server
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: '', email: '', phone: '', message: '' })
-    }, 3000)
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Unable to send your message. Please try again.')
+      }
+
+      setSubmitted(true)
+      setTimeout(() => {
+        setSubmitted(false)
+        setFormData({ name: '', email: '', phone: '', message: '' })
+      }, 3000)
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Unable to send your message. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e) => {
+    setSubmitError('')
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -29,12 +51,17 @@ const ContactForm = () => {
 
   return (
     <div>
-      <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-          Get In <span className="text-gradient">Touch</span>
+      <div className="text-center mb-16">
+        <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 rounded-full px-4 py-2 mb-6">
+          <MessageCircle className="h-4 w-4 text-gold-400" />
+          <span className="text-gold-400 text-sm font-medium">Contact Us</span>
+        </div>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <span className="text-white">Get In </span>
+          <span className="text-gradient">Touch</span>
         </h2>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Have questions? We're here to help you find the perfect car loan solution.
+        <p className="text-xl text-navy-300 max-w-2xl mx-auto">
+          Have questions about new or used car financing? Our premium concierge team is here to help you find the perfect loan solution.
         </p>
       </div>
 
@@ -42,82 +69,87 @@ const ContactForm = () => {
         {/* Contact Information */}
         <div className="space-y-8">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-2xl font-bold text-white mb-6">
               Contact Information
             </h3>
-            <p className="text-gray-600 mb-8">
-              Our team is available Monday through Friday, 9 AM to 6 PM. Reach out to us through any of the following channels.
+            <p className="text-navy-300 mb-8 leading-relaxed">
+              Our team is available Monday through Friday, 9 AM to 6 PM. Reach out to us through any of the following channels for premium assistance.
             </p>
           </div>
 
           <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Phone className="h-6 w-6 text-primary-600" />
+            <div className="group flex items-start gap-4 p-4 bg-glass rounded-xl border border-white/10 hover:border-gold-500/30 transition-all duration-300">
+              <div className="w-14 h-14 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <Phone className="h-6 w-6 text-navy-950" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
-                <p className="text-gray-600">1-800-WHEELS-WEB</p>
-                <p className="text-gray-600">+1 (555) 123-4567</p>
+                <h4 className="font-semibold text-white mb-1 group-hover:text-gold-400 transition-colors">Phone</h4>
+                <p className="text-navy-300">8088915886</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Mail className="h-6 w-6 text-primary-600" />
+            <div className="group flex items-start gap-4 p-4 bg-glass rounded-xl border border-white/10 hover:border-gold-500/30 transition-all duration-300">
+              <div className="w-14 h-14 bg-gradient-to-br from-luxury-400 to-luxury-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <Mail className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
-                <p className="text-gray-600">support@wheelsweb.com</p>
-                <p className="text-gray-600">loans@wheelsweb.com</p>
+                <h4 className="font-semibold text-white mb-1 group-hover:text-gold-400 transition-colors">Email</h4>
+                <p className="text-navy-300">4wheelsweb@gmail.com</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <MapPin className="h-6 w-6 text-primary-600" />
+            <div className="group flex items-start gap-4 p-4 bg-glass rounded-xl border border-white/10 hover:border-gold-500/30 transition-all duration-300">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <MapPin className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Office</h4>
-                <p className="text-gray-600">123 Finance Street</p>
-                <p className="text-gray-600">New York, NY 10001</p>
+                <h4 className="font-semibold text-white mb-1 group-hover:text-gold-400 transition-colors">Office</h4>
+                <p className="text-navy-300">Tilak Nagar, Shimogga</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl p-6 text-white">
-            <h4 className="font-bold text-lg mb-2">Need Immediate Help?</h4>
-            <p className="text-primary- mb-4">
-              Our loan specialists are ready to assist you with personalized guidance.
-            </p>
-            <a
-              href="tel:1800934357932"
-              className="inline-flex items-center bg-white text-primary-600 px-4 py-2 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
-            >
-              <Phone className="h-4 w-4 mr-2" />
-              Call Now
-            </a>
+          <div className="bg-gradient-to-br from-gold-500/20 to-luxury-500/20 rounded-2xl p-6 border border-gold-500/30 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-gold-400/10 to-luxury-400/10 animate-shimmer"></div>
+            <div className="relative">
+              <h4 className="font-bold text-lg text-white mb-2">Need Immediate Help?</h4>
+              <p className="text-navy-300 mb-4">
+                Our loan specialists are ready to assist you with personalized guidance.
+              </p>
+              <a
+                href="tel:1800934357932"
+                className="inline-flex items-center btn-luxury group"
+              >
+                <Phone className="h-4 w-4 mr-2" />
+                Call Now
+              </a>
+            </div>
           </div>
         </div>
 
         {/* Contact Form */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg">
+        <div className="card-luxury relative overflow-hidden">
           {submitted ? (
-            <div className="text-center py-12">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="h-10 w-10 text-green-600" />
+            <div className="text-center py-16">
+              <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-scale-in">
+                <CheckCircle className="h-12 w-12 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              <h3 className="text-3xl font-bold text-white mb-2">
                 Message Sent!
               </h3>
-              <p className="text-gray-600">
-                Thank you for reaching out. Our team will get back to you within 24 hours.
+              <p className="text-navy-300 text-lg">
+                Thank you for reaching out. Our premium team will get back to you within 2 hours.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {submitError && (
+                <p role="alert" className="rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-red-200">
+                  {submitError}
+                </p>
+              )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-navy-300 mb-2">
                   Full Name
                 </label>
                 <input
@@ -126,13 +158,14 @@ const ContactForm = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  maxLength={200}
+                  className="w-full px-5 py-4 bg-navy-900/50 border border-navy-700 rounded-xl text-white placeholder-navy-500 focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all duration-300"
                   placeholder="John Doe"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-navy-300 mb-2">
                   Email Address
                 </label>
                 <input
@@ -141,13 +174,14 @@ const ContactForm = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  maxLength={320}
+                  className="w-full px-5 py-4 bg-navy-900/50 border border-navy-700 rounded-xl text-white placeholder-navy-500 focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all duration-300"
                   placeholder="john@example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-navy-300 mb-2">
                   Phone Number
                 </label>
                 <input
@@ -155,13 +189,14 @@ const ContactForm = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  maxLength={40}
+                  className="w-full px-5 py-4 bg-navy-900/50 border border-navy-700 rounded-xl text-white placeholder-navy-500 focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all duration-300"
                   placeholder="+1 (555) 000-0000"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-navy-300 mb-2">
                   Message
                 </label>
                 <textarea
@@ -169,18 +204,20 @@ const ContactForm = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
+                  maxLength={5000}
+                  rows={5}
+                  className="w-full px-5 py-4 bg-navy-900/50 border border-navy-700 rounded-xl text-white placeholder-navy-500 focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all duration-300 resize-none"
                   placeholder="Tell us about your car loan needs..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full btn-primary flex items-center justify-center"
+                disabled={isSubmitting}
+                className="w-full btn-luxury flex items-center justify-center group"
               >
-                <Send className="h-5 w-5 mr-2" />
-                Send Message
+                {!isSubmitting && <Send className="h-5 w-5 mr-2 group-hover:translate-x-1 transition-transform" />}
+                {isSubmitting ? 'Saving...' : 'Send Message'}
               </button>
             </form>
           )}

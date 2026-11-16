@@ -4,24 +4,64 @@
 
 @layer base {
   body {
-    @apply font-sans antialiased;
+    @apply font-sans antialiased bg-navy-950 text-white;
+  }
+  
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-gold-400 via-luxury-400 to-gold-500 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-navy {
+    @apply bg-gradient-to-r from-navy-100 to-navy-300 bg-clip-text text-transparent;
+  }
+  
+  .bg-glass {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+  }
+  
+  .bg-glass-dark {
+    @apply bg-navy-900/50 backdrop-blur-lg border border-white/10;
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    @apply transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-105;
   }
   
-  .btn-primary {
-    @apply bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-lg hover:shadow-xl;
+  .btn-luxury {
+    @apply bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 px-8 py-4 rounded-xl font-bold hover:from-gold-400 hover:to-gold-500 transition-all duration-300 shadow-lg hover:shadow-gold-500/25 transform hover:scale-105;
   }
   
-  .btn-secondary {
-    @apply bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200 shadow-lg hover:shadow-xl border-2 border-primary-600;
+  .btn-navy {
+    @apply bg-gradient-to-r from-navy-700 to-navy-800 text-white px-8 py-4 rounded-xl font-bold hover:from-navy-600 hover:to-navy-700 transition-all duration-300 shadow-lg hover:shadow-navy-500/25 transform hover:scale-105 border border-navy-600;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent text-gold-400 px-8 py-4 rounded-xl font-bold border-2 border-gold-400 hover:bg-gold-400 hover:text-navy-950 transition-all duration-300;
+  }
+  
+  .section-padding {
+    @apply py-24 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-luxury {
+    @apply max-w-7xl mx-auto;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
+  }
+  
+  .card-luxury {
+    @apply bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-8 border border-navy-700;
+  }
+  
+  .card-luxury-light {
+    @apply bg-gradient-to-br from-white to-navy-50 rounded-2xl p-8 border border-navy-200;
   }
 }
